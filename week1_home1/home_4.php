@@ -6,23 +6,13 @@
 Выведите фразу “Неизвестный день”, если значение переменной $day не попадает в диапазон чисел от 1 до 7 (включительно)
 */
 
-$day = 4;
+$day = rand(-2, 10);
 echo '$day = ' . $day . '<br>';
 
-switch ($day) {
-    case 1:
-    case 2:
-    case 3:
-    case 4:
-    case 5:
-        echo 'Это рабочий день';
-        break;
-    case 6:
-    case 7:
-        echo 'Это выходной день';
-        break;
-    case $day < 1:
-    case $day > 7:
-        echo 'Неизвестный день';
-        break;
+if ($day > 0 and $day < 6) {
+    echo 'Это рабочий день';
+} elseif ($day < 1 or $day > 7) {
+    echo 'Неизвестный день';
+} else {
+    echo 'Это выходной день';
 }
