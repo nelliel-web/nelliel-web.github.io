@@ -117,12 +117,13 @@ function task3($int1, $int2)
 }
 
 
-function task4($file_name){
-    if (file_exists($file_name)){
-    $file = fopen($file_name,'r');
+function task4($file_name)
+{
+    if (file_exists($file_name)) {
+        $file = fopen($file_name, 'r');
         fpassthru($file);
-        fclose ($file);
-    }else{
+        fclose($file);
+    } else {
         echo 'Такого имени файла не существует';
     }
 }
