@@ -32,12 +32,86 @@ function task1($array, $optional = false)
 }
 
 
-function task2()
+function task2($sign)
 {
-    echo 'task2';
+    /*
+    Функция должна принимать переменное число аргументов.
+    Первым аргументом обязательно должна быть строка, обозначающая арифметическое действие, которое необходимо выполнить со всеми передаваемыми аргументами.
+    Остальные аргументы это целые и/или вещественные числа.
+     */
+    $args = func_get_args();
+    if (isset($args[1])) {
+        if ($sign == '+') {
+            $result = $args[1];
+            for ($i = 2; $i < count($args); $i++) {
+                if (is_numeric($args[$i])) {
+                    $result += $args[$i];
+                }
+            }
+        } elseif ($sign == '-') {
+            $result = $args[1];
+            for ($i = 2; $i < count($args); $i++) {
+                if (is_numeric($args[$i])) {
+                    $result -= $args[$i];
+                }
+            }
+        } elseif ($sign == '*') {
+            $result = $args[1];
+            for ($i = 2; $i < count($args); $i++) {
+                if (is_numeric($args[$i])) {
+                    $result *= $args[$i];
+                }
+            }
+        } elseif ($sign == '/') {
+            $result = $args[1];
+            for ($i = 2; $i < count($args); $i++) {
+                if (is_numeric($args[$i])) {
+                    $result /= $args[$i];
+                }
+            }
+        } elseif ($sign == '**') {
+            $result = $args[1];
+            for ($i = 2; $i < count($args); $i++) {
+                if (is_numeric($args[$i])) {
+                    $result **= $args[$i];
+                }
+            }
+        } else {
+            return false;
+            // В функцию был неверно передан первый аргумент
+        }
+        echo $result;
+    } else {
+        return false;
+        // В функцию не были переданы аргументы для арифметических действий
+    }
+
 }
 
-function task3()
+
+function task3($int1, $int2)
 {
-    echo 'task3';
+    /* Функция должна принимать два параметра – целые числа.
+       Если в функцию передали 2 целых числа, то функция должна отобразить таблицу умножения размером со значения параметров,
+       переданных в функцию. (Например если передано 8 и 8, то нарисовать от 1х1 до 8х8). Таблица должна быть выполнена с использованием
+       тега <table>. В остальных случаях выдавать корректную ошибку.
+    1x1 1x2 1x3
+    2x2 2x3 2x4
+
+    */
+    if (is_int($int1) and is_int($int2) and ($int1 != 0 and $int2 != 0)) {
+
+        echo "<table border=\"1\">\n";
+        for ($i = 1; $i <= $int1; $i++) {
+            echo "\t<tr>\n";
+            for ($n = 1; $n <= $int2; $n++) {
+                echo "\t\t<td>$i * $n = " . $i * $n . "</td>\n";
+            }
+            echo "\t</tr>\n";
+        }
+        echo "</table>\n";
+    } else {
+        echo 'Один или оба аргумента функции не являются целыми числами, или один из них равен нулю';
+    }
+
 }
