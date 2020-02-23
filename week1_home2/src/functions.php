@@ -7,7 +7,7 @@ function task1(array $array, bool $optional = false)
         return is_string($string);
     });
 
-    if(!empty($array)) {
+    if (!empty($array)) {
         if ($optional === false) {
             foreach ($array as $text) {
                 echo '<p>' . $text . '</p>';
@@ -15,7 +15,7 @@ function task1(array $array, bool $optional = false)
         } elseif ($optional === true) {
             return implode('. ', $array);
         }
-    }else{
+    } else {
         echo 'В массиве нет строк';
     }
 }
@@ -23,7 +23,7 @@ function task1(array $array, bool $optional = false)
 
 function task2($sign, ...$numbers)
 {
-    if (isset($numbers) and 1 < count($numbers)) {
+    if (1 < count($numbers)) {
         if ($sign == '+' or $sign == '-' or $sign == '*' or $sign == '**' or $sign == '/') {
 
             $numbers = array_filter($numbers, function ($array) {
@@ -76,32 +76,53 @@ function task2($sign, ...$numbers)
 }
 
 
-function task3($int1, $int2)
+function task3(int $rows, int $cols)
 {
-    if (is_int($int1) and is_int($int2) and ($int1 != 0 and $int2 != 0)) {
+    if ($rows != 0 and $cols != 0) {
 
         echo "<table border=\"1\">\n";
-        for ($i = 1; $i <= $int1; $i++) {
+        for ($i = 1; $i <= $rows; $i++) {
             echo "\t<tr>\n";
-            for ($n = 1; $n <= $int2; $n++) {
+            for ($n = 1; $n <= $cols; $n++) {
                 echo "\t\t<td>$i * $n = " . $i * $n . "</td>\n";
             }
             echo "\t</tr>\n";
         }
         echo "</table>\n";
-    } else {
-        echo 'Один или оба аргумента функции не являются целыми числами, или один из них равен нулю';
-    }
 
+    } else {
+        echo 'Один или оба аргумента функции равен или меньше нуля';
+    }
 }
 
 
-function task4($file_name)
+function task4()
+{
+    echo date('d.m.Y H:i') . '<br>';
+    echo '24.02.2016 00:00:00 = unixtime ' . strtotime('24.02.2016 00:00:00');
+}
+
+
+function task5(string $string1, string $string2)
+{
+    echo $string1 . '<br>';
+    echo str_replace('К', '', $string1) . '<br><br>';
+
+    echo $string2 . '<br>';
+    echo str_replace(['Две', 'лимонада'], ['Три', 'воды'], $string2);
+}
+
+
+function task6(string $file_name, string $file_text)
+{
+    file_put_contents($file_name, $file_text);
+}
+
+
+function task7($file_name)
 {
     if (file_exists($file_name)) {
-        $file = fopen($file_name, 'r');
-        fpassthru($file);
-        fclose($file);
+       echo file_get_contents($file_name);
     } else {
         echo 'Такого имени файла не существует';
     }
