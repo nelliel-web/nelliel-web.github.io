@@ -1,4 +1,5 @@
 <?php
+// =======================================================
 // Задание 3.1
 function get_delivery_info($fileName)
 {
@@ -38,6 +39,7 @@ function get_delivery_info($fileName)
     echo '</table>';
 }
 
+// =======================================================
 // Задание 3.2
 function create_json_file(array $array, string $filename)
 {
@@ -110,3 +112,36 @@ function get_all_games(array $games)
     return $my_game;
 }
 
+
+// =======================================================
+// Задание 3.3
+function createRandNumArray(int $num)
+{
+    for ($i = 0; $i < $num; $i++) {
+        $rand_num[] = mt_rand(1, 100);
+    }
+    return $rand_num;
+}
+
+function create_csv_file(array $array, string $filename)
+{
+    $listnum = '';
+    foreach ($array as $num) {
+        $listnum .= $num . "\n";
+    }
+    file_put_contents($filename, $listnum);
+}
+
+function get_summ_from_csv(string $filename){
+    $summ = 0;
+    $Thefile = fopen($filename, 'r');
+    if (!$Thefile) {
+        die('Файл не найден');
+    }
+    while ($num = fgets($Thefile, 100)) {
+        if (($num % 2) == 0) {
+            $summ += $num;
+        }
+    }
+    return $summ;
+}
