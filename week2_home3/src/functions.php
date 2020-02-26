@@ -1,4 +1,5 @@
 <?php
+// Задание 3.1
 function get_delivery_info($fileName)
 {
     $delivery = new SimpleXMLElement($fileName);
@@ -36,3 +37,76 @@ function get_delivery_info($fileName)
 
     echo '</table>';
 }
+
+// Задание 3.2
+function create_json_file(array $array, string $filename)
+{
+    return file_put_contents($filename, json_encode($array));
+}
+
+function open_json_file(string $filename, array $replaceValue)
+{
+    $jsonfile = json_decode(file_get_contents($filename), true);
+    if (rand(0, 1)) {
+        echo 'Данные перезаписаны: <br>';
+        foreach ($replaceValue as $oldname => $newname) {
+            $jsonfile = recursive_array_replace($oldname, $newname, $jsonfile);
+        }
+        file_put_contents('output2.json', json_encode($jsonfile));
+    } else {
+        echo 'Данные НЕ перезаписаны: <br>';
+        file_put_contents('output.json', json_encode($jsonfile));
+    }
+}
+
+function recursive_array_replace($find, $replace, $array)
+{
+    if (!is_array($array)) {
+        return str_replace($find, $replace, $array);
+    }
+    $newArray = [];
+    foreach ($array as $key => $value) {
+        $newArray[$key] = recursive_array_replace($find, $replace, $value);
+    }
+    return $newArray;
+}
+
+function get_diff_json(string $filename1, string $filename2)
+{
+    if (file_exists($filename1) and file_exists($filename2)) {
+        $file1 = json_decode(file_get_contents($filename1), true);
+        $file2 = json_decode(file_get_contents($filename2), true);
+
+        $file1 = explode(',', get_all_games($file1));
+        array_pop($file1);
+
+        $file2 = explode(',', get_all_games($file2));
+        array_pop($file2);
+
+        $original_file = array_diff($file1, $file2);
+        $new_file = array_values(array_diff($file2, $file1));
+        echo '<br>В файлах ' . $filename1 . ' и ' . $filename2 . ' отличаются следующие элементы (старый - новый):<br><br>';
+        $i = 0;
+        foreach ($original_file as $original) {
+            echo $original . ' - ' . $new_file[$i] . '<br>';
+            $i++;
+        }
+    } else {
+        echo 'Один из файлов не найден';
+    }
+}
+
+
+function get_all_games(array $games)
+{
+    $my_game = '';
+    foreach ($games as $game) {
+        if (is_array($game)) {
+            $my_game .= get_all_games($game);
+        } else {
+            $my_game .= $game . ',';
+        }
+    }
+    return $my_game;
+}
+
