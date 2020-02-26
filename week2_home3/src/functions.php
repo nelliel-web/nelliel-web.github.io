@@ -132,16 +132,18 @@ function create_csv_file(array $array, string $filename)
     file_put_contents($filename, $listnum);
 }
 
-function get_summ_from_csv(string $filename){
+function get_summ_from_csv(string $filename)
+{
     $summ = 0;
     $Thefile = fopen($filename, 'r');
     if (!$Thefile) {
-        die('Файл не найден');
-    }
-    while ($num = fgets($Thefile, 100)) {
-        if (($num % 2) == 0) {
-            $summ += $num;
+        echo 'Файл не найден';
+    } else {
+        while ((int)$num = fgets($Thefile, 1000)) {
+            if (($num % 2) == 0) {
+                $summ += $num;
+            }
         }
+        return $summ;
     }
-    return $summ;
 }
