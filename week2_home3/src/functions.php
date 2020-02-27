@@ -1,9 +1,9 @@
 <?php
 // =======================================================
 // Задание 3.1
-function get_delivery_info($fileName)
+function getDeliveryInfo($file_name)
 {
-    $delivery = new SimpleXMLElement($fileName);
+    $delivery = new SimpleXMLElement($file_name);
 
     echo '<table cellpadding="2" cellspacing="5"><tr><th>Purchase Order Number</th><th>Order Date</th></tr>';
     echo '<tr><td>' . $delivery->attributes()->PurchaseOrderNumber . '</td>';
@@ -41,105 +41,116 @@ function get_delivery_info($fileName)
 
 // =======================================================
 // Задание 3.2
-function create_json_file(array $array, string $filename)
+function createJsonFile(array $array, string $file_name)
 {
-    return file_put_contents($filename, json_encode($array));
+    return file_put_contents($file_name, json_encode($array));
 }
 
-function open_json_file(string $filename, array $replaceValue)
+function openJsonFile(string $file_name)
 {
-    $jsonfile = json_decode(file_get_contents($filename), true);
-    if (rand(0, 1)) {
+    return $json_file = json_decode(file_get_contents($file_name), true);
+}
+
+function replaceValue(array $json_file, array $replace_value, bool $do_replace = true)
+{
+    if ($do_replace) {
         echo 'Данные перезаписаны: <br>';
-        foreach ($replaceValue as $oldname => $newname) {
-            $jsonfile = recursive_array_replace($oldname, $newname, $jsonfile);
-        }
-        file_put_contents('output2.json', json_encode($jsonfile));
+        createJsonFile(replaceJsonFile($json_file, $replace_value), 'output2.json');
     } else {
         echo 'Данные НЕ перезаписаны: <br>';
-        file_put_contents('output.json', json_encode($jsonfile));
+        createJsonFile($json_file, 'output.json');
     }
 }
 
-function recursive_array_replace($find, $replace, $array)
+function replaceJsonFile(array $json_file, array $replace_value)
+{
+    foreach ($replace_value as $old_value => $new_value) {
+        $json_file = recursiveArrayReplace($old_value, $new_value, $json_file);
+    }
+    return $json_file;
+}
+
+
+function recursiveArrayReplace($find, $replace, $array)
 {
     if (!is_array($array)) {
         return str_replace($find, $replace, $array);
     }
-    $newArray = [];
+    $new_array = [];
     foreach ($array as $key => $value) {
-        $newArray[$key] = recursive_array_replace($find, $replace, $value);
+        $new_array[$key] = recursiveArrayReplace($find, $replace, $value);
     }
-    return $newArray;
+    return $new_array;
 }
 
-function get_diff_json(string $filename1, string $filename2)
+function getDiffJson(string $file_name_1, string $file_name_2, string $delimiter = ',')
 {
-    if (file_exists($filename1) and file_exists($filename2)) {
-        $file1 = json_decode(file_get_contents($filename1), true);
-        $file2 = json_decode(file_get_contents($filename2), true);
+    if (!file_exists($file_name_1) or !file_exists($file_name_2)) {
+        echo 'Один из файлов не найден';
+        return;
+    } else {
+        $file_1 = json_decode(file_get_contents($file_name_1), true);
+        $file_2 = json_decode(file_get_contents($file_name_2), true);
 
-        $file1 = explode(',', get_all_games($file1));
-        array_pop($file1);
+        $file_1 = explode($delimiter, explodeRecursive($file_1));
+        array_pop($file_1);
 
-        $file2 = explode(',', get_all_games($file2));
-        array_pop($file2);
+        $file_2 = explode($delimiter, explodeRecursive($file_2));
+        array_pop($file_2);
 
-        $original_file = array_diff($file1, $file2);
-        $new_file = array_values(array_diff($file2, $file1));
-        echo '<br>В файлах ' . $filename1 . ' и ' . $filename2 . ' отличаются следующие элементы (старый - новый):<br><br>';
+        $original_file = array_diff($file_1, $file_2);
+        $new_file = array_values(array_diff($file_2, $file_1));
+        echo '<br>В файлах ' . $file_name_1 . ' и ' . $file_name_2 . ' отличаются следующие элементы (старый - новый):<br><br>';
         $i = 0;
         foreach ($original_file as $original) {
             echo $original . ' - ' . $new_file[$i] . '<br>';
             $i++;
         }
-    } else {
-        echo 'Один из файлов не найден';
     }
 }
 
 
-function get_all_games(array $games)
+function explodeRecursive(array $array, string $delimiter = ',')
 {
-    $my_game = '';
-    foreach ($games as $game) {
-        if (is_array($game)) {
-            $my_game .= get_all_games($game);
+    $my_value = '';
+    foreach ($array as $value) {
+        if (is_array($value)) {
+            $my_value .= explodeRecursive($value);
         } else {
-            $my_game .= $game . ',';
+            $my_value .= $value . $delimiter;
         }
     }
-    return $my_game;
+    return $my_value;
 }
 
 
 // =======================================================
 // Задание 3.3
-function createRandNumArray(int $num)
+function createRandNumArray(int $limit)
 {
-    for ($i = 0; $i < $num; $i++) {
+    for ($i = 0; $i < $limit; $i++) {
         $rand_num[] = mt_rand(1, 100);
     }
     return $rand_num;
 }
 
-function create_csv_file(array $array, string $filename)
+function createCsvFile(array $array, string $file_name)
 {
-    $listnum = '';
-    foreach ($array as $num) {
-        $listnum .= $num . "\n";
+    $values = '';
+    foreach ($array as $value) {
+        $values .= $value . "\n";
     }
-    file_put_contents($filename, $listnum);
+    file_put_contents($file_name, $values);
 }
 
-function get_summ_from_csv(string $filename)
+function getSummFromCsv(string $file_name)
 {
     $summ = 0;
-    $Thefile = fopen($filename, 'r');
-    if (!$Thefile) {
+    $file = fopen($file_name, 'r');
+    if (!$file) {
         echo 'Файл не найден';
     } else {
-        while ((int)$num = fgets($Thefile, 1000)) {
+        while ((int)$num = fgets($file, 1000)) {
             if (($num % 2) == 0) {
                 $summ += $num;
             }

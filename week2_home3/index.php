@@ -11,8 +11,7 @@ echo '<b>' . 'Задание 3.1' . '</b><br>';
 Представьте, что результат вашего скрипта будет распечатан и выдан курьеру для доставки,
 разберется ли курьер в этой информации?
 */
-$fileData = file_get_contents('data.xml');
-get_delivery_info($fileData);
+getDeliveryInfo(file_get_contents('data.xml'));
 
 
 echo '<hr><b>' . 'Задание 3.2' . '</b><br>';
@@ -49,17 +48,17 @@ $games_replace = [
     'Risen 2' => 'Risen 2: Dark water',
     'elex' => 'ELEX',
 ];
-$output1 = 'output.json';
-$output2 = 'output2.json';
+$output_1 = 'output.json';
+$output_2 = 'output2.json';
 
 //Записываем данные в .json
-create_json_file($games, $output1);
+createJsonFile($games, $output_1);
 
 //Открываем .json и перезаписываем его, или ничего не делаем
-open_json_file($output1, $games_replace);
+replaceValue(openJsonFile($output_1), $games_replace, (bool)rand(0, 1));
 
 //Сравниваем .json файлы и выводим различия
-get_diff_json($output1, $output2);
+getDiffJson($output_1, $output_2, ',');
 
 
 echo '<hr><b>' . 'Задание 3.3' . '</b><br>';
@@ -67,14 +66,14 @@ echo '<hr><b>' . 'Задание 3.3' . '</b><br>';
 Программно создайте массив, в котором перечислено не менее 50 случайных чисел от 1 до 100.
 Сохраните данные в файл csv. Откройте файл csv и посчитайте сумму четных чисел.
 */
-$num = 50;
-$nameFile = 'num.csv';
+$limit = 50;
+$name_file = 'num.csv';
 
-$rand_num = createRandNumArray($num);
-create_csv_file($rand_num, $nameFile);
-$summ = get_summ_from_csv($nameFile);
+$rand_num = createRandNumArray($limit);
+createCsvFile($rand_num, $name_file);
+$summ = getSummFromCsv($name_file);
 
-echo 'Сумма случайных четных значений из файла: ' . $nameFile . ' = ' . $summ;
+echo 'Сумма случайных четных значений из файла: ' . $name_file . ' = ' . $summ;
 
 
 echo '<hr><b>' . 'Задание 3.4' . '</b><br>';
