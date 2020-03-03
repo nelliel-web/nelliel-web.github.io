@@ -1,0 +1,64 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<style>
+    .hidden { display: none; }
+</style>
+
+<form method="post" action="index.php" enctype="multipart/form-data" id="register_form">
+    Name: <input type="text" name="name"><br>
+    <div id="type_password">
+        Password: <input type="text" name="password"><br>
+        Password confirm: <input type="text" name="password_confirm"><br>
+    </div>
+    <div id="type_vk" class="hidden">
+        VK Id: <input type="text" name="vk_id"><br>
+        VK Hash: <input type="text" name="vk_hash"><br>
+    </div>
+    <div id="type_google" class="hidden">
+        google key: <input type="text" name="google_key"><br>
+        google secret: <input type="text" name="google_secret"><br>
+    </div>
+    Photo: <input name="photo" type="file">
+    <br>
+    <div>
+        <input type="radio" name="reg_type" value="password" onchange="selectRegType($(this));" checked="checked">password
+        <input type="radio" name="reg_type" value="vk"  onchange="selectRegType($(this));">vk
+        <input type="radio" name="reg_type" value="google" onchange="selectRegType($(this));">google
+    </div>
+    <br>
+    <input type="submit" value="Зарегистрироваться">
+    <input type="button" value="Зарегистрироваться AJAX-ом" onclick="ajaxRegister();">
+</form>
+
+<script>
+    var lastShown = $('#type_password');
+
+    function selectRegType($el) {
+        console.log($el.attr('value'));
+        var showElem = $('#type_' + $el.attr('value'));
+        showElem.show();
+        lastShown.hide();
+        lastShown = showElem;
+    }
+
+    function ajaxRegister() {
+        // AJAX-запрос, который будет отправлен на сервер:
+        //   по адресу: index.php
+        //   методом POST
+        //   содержащий данные $data
+        // success - это функция, которая будет вызвана после получения ответа от сервера
+        //   (сам ответ доступен посредством аргумента result)
+        $.ajax({
+            url: 'ajax.register.php',
+            type: 'post',
+            data: $('#register_form').serialize(),
+            success: function(response) {
+                console.log(response);
+                console.log(response.result);
+                if (response.result == 'error') {
+                    alert(response.error);
+                }
+            }
+        });
+    }
+</script>
