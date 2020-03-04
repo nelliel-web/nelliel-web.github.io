@@ -1,13 +1,13 @@
 <?php
 require_once 'interface/classes/rate.php';
 
-class rateBase
+class rateDays
 {
     use Services;
 
-    private $price_by_km = 10;
-    private $price_by_time = 3;
-    private $numeric_by_time = 1;
+    private $price_by_km = 1;
+    private $price_by_time = 1000;
+    private $numeric_by_time = 24;
 
     public $number_of_minutes = 0;
     public $number_of_hours = 0;
@@ -16,7 +16,7 @@ class rateBase
 
 
     public $add_gps = '';
-    private $add_driver = false;
+    public $add_driver = false;
 
 
     public function getPrice()
@@ -25,16 +25,12 @@ class rateBase
         $price_driver = $this->addDriver($this->add_driver);
 
         $number_of_time = $this->getCorrectTime();
-        return
-            ($this->price_by_km * $this->number_of_km) +
-            ($this->numeric_by_time * $this->price_by_time * $number_of_time) +
-            ($price_gps + $price_driver);
+        return ($this->price_by_km * $this->number_of_km) + $this->price_by_time * $number_of_time + ($price_gps + $price_driver);
     }
 
     private function getCorrectTime()
     {
-        return $this->number_of_hours * 60 + $this->number_of_minutes;
+        $minutes = $this->number_of_hours * 60 + $this->number_of_minutes;
+        return ceil($minutes / ($this->numeric_by_time * 60 + 30));
     }
-
-
 }
