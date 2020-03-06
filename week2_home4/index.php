@@ -1,10 +1,10 @@
 <?php
-require_once('interface/iCarsharing.php');
-require_once('interface/classes/rate.php');
-require_once('interface/classes/rateBase.php');
-require_once('interface/classes/rateHours.php');
-require_once('interface/classes/rateDays.php');
-require_once('interface/classes/rateStudents.php');
+require_once('src/iCarsharing.php');
+require_once('src/classes/rate.php');
+require_once('src/classes/rateBase.php');
+require_once('src/classes/rateHours.php');
+require_once('src/classes/rateDays.php');
+require_once('src/classes/rateStudents.php');
 
 
 echo '<h2>Тариф - Базовый</h2>';

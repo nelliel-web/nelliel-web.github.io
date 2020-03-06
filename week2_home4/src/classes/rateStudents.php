@@ -1,10 +1,9 @@
 <?php
 
-
 class rateStudents
 {
 
-    use Services;
+    use GPS;
 
     private $price_by_km = 4;
     private $price_by_time = 1;
