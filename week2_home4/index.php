@@ -1,5 +1,6 @@
 <?php
 require_once('src/I_Carsharing.php');
+require_once('src/classes/Traits.php');
 require_once('src/classes/A_Rate.php');
 require_once('src/classes/BaseRate.php');
 require_once('src/classes/HoursRate.php');
@@ -22,7 +23,7 @@ echo '<br>Итоговая стоимость: ' . $rate->getPrice() . '<hr>';
 
 
 echo '<h2>Тариф - Почасовой</h2>';
-$rate = new HoursRate(); 
+$rate = new HoursRate();
 $rate->hours = 24;
 $rate->minutes = 30;
 $rate->km = 25;
