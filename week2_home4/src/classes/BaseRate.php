@@ -1,6 +1,6 @@
 <?php
 
-class rateBase extends A_Rate
+class BaseRate extends A_Rate
 {
     use GPS;
 

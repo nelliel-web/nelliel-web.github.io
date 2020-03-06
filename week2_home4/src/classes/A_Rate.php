@@ -10,19 +10,13 @@ trait GPS
 
 trait Driver
 {
-    public function addDriver(bool $bool)
+    private function addDriver()
     {
-        if ($bool === true) {
-            return 100;
-        } else {
-            return 0;
-        }
-
+        return 100;
     }
 }
 
-
-abstract class Rate implements iCarsharing
+abstract class A_Rate implements I_Carsharing
 {
 
     protected $price_by_km;
@@ -42,7 +36,6 @@ abstract class Rate implements iCarsharing
     {
         $price_by_km = $this->price_by_km;
         $price_by_time = $this->price_by_time;
-        $numeric_by_time = $this->numeric_by_time;
         $time = $this->getCorrectTime();
         $km = $this->km;
         $age = $this->age;
@@ -52,10 +45,15 @@ abstract class Rate implements iCarsharing
             if ($age < 22) {
                 $coefficient = 1.1;
             }
-            return (($price_by_km * $km) + ($numeric_by_time * $price_by_time * $time)) * $coefficient;
+            return (($price_by_km * $km) + ($price_by_time * $time)) * $coefficient;
         } else {
             return false;
         }
+    }
+
+    public function getMinutesOfDrive()
+    {
+        return $this->hours * 60 + $this->minutes;
     }
 
 

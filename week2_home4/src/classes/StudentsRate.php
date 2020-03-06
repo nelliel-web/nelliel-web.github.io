@@ -1,6 +1,6 @@
 <?php
 
-class rateStudents extends A_Rate
+class StudentsRate extends A_Rate
 {
 
     use GPS;

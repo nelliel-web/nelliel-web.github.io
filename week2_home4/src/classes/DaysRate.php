@@ -1,6 +1,6 @@
 <?php
 
-class rateDays extends A_Rate
+class DaysRate extends A_Rate
 {
     use GPS;
     use Driver;

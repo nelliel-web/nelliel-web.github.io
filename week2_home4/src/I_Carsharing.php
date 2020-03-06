@@ -1,6 +1,6 @@
 <?php
 
-interface iCarsharing
+interface I_Carsharing
 {
     public function getPrice();
 
