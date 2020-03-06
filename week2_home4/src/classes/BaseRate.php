@@ -8,13 +8,6 @@ class BaseRate extends A_Rate
     protected $price_by_time = 3;
     protected $numeric_by_time = 1;
 
-    public $minutes = 0;
-    public $hours = 0;
-    public $km = 0;
-    public $age = '';
-
-    public $add_gps = false;
-
 
     public function getPrice()
     {

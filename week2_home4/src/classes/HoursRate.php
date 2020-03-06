@@ -9,14 +9,6 @@ class HoursRate extends A_Rate
     protected $price_by_time = 200;
     protected $numeric_by_time = 60;
 
-    public $minutes = 0;
-    public $hours = 0;
-    public $km = 0;
-    public $age = '';
-
-    public $add_gps = false;
-    public $add_driver = false;
-
 
     public function getPrice()
     {

@@ -7,10 +7,10 @@ abstract class A_Rate implements I_Carsharing
     protected $price_by_time;
     protected $numeric_by_time;
 
-    protected $minutes;
-    protected $hours;
-    protected $km;
-    protected $age;
+    public $minutes = 0;
+    public $hours = 0;
+    public $km = 0;
+    public $age = '';
 
 
     abstract public function getCorrectTime();
