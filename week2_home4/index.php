@@ -45,7 +45,7 @@ $rate->km = 25;
 $rate->age = 19;
 $rate->add_driver = true;
 $rate->add_gps = true;
-$rate->getCorrectTime();
+
 echo '<pre>';
 print_r($rate);
 echo '</pre>';
