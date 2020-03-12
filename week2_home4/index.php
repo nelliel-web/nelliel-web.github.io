@@ -39,13 +39,13 @@ echo '<br>Итоговая стоимость: ' . $rate->getPrice() . '<hr>';
 
 echo '<h2>Тариф - Дневной</h2>';
 $rate = new DaysRate();
-$rate->hours = 24;
-$rate->minutes = 30;
+$rate->hours = 182;
+$rate->minutes = 54;
 $rate->km = 25;
 $rate->age = 19;
 $rate->add_driver = true;
 $rate->add_gps = true;
-
+$rate->getCorrectTime();
 echo '<pre>';
 print_r($rate);
 echo '</pre>';

@@ -19,6 +19,12 @@ class DaysRate extends A_Rate
 
     public function getCorrectTime()
     {
-        return ceil($this->getMinutesOfDrive() / ($this->numeric_by_time * 60 + 30));
+        $days = floor($this->getMinutesOfDrive() / 60 / 24);
+        $days_minus = 1;
+        if ($days === 0) {
+            $days = 1;
+            $days_minus = 0;
+        }
+        return ceil(($this->getMinutesOfDrive() + (30 * ($days - $days_minus))) / ($this->numeric_by_time * 60 + 30));
     }
 }
